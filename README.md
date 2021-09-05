@@ -64,6 +64,38 @@ VALUES (1, 'someemail@gmail.com', 'other name','some name');
         4. check that the java system is capable of extracting the record we inserted into the database
         ![working api](img/working_api.png)
 
+## how we develop(ed) the system
+
+1. [min 01:23:34](https://youtu.be/G46fjVzQ7BQ?t=5028) Now let's change the system to accommodate to your needs. all of the systems can be found in the git commit __________________
+
+    1. Even though for the priorizerBL the important part is the data stored in memory/RAM (the data structures) but for analitycs is important to persist some information, so let's add the database task_logs_system where we will have metadata about the task (like how long did it took from the moment it was scheduled to the moment when it was executed, how many machines were there, how many times did the task had to retry).
+
+2. get into the backend container, and connect to the database
+    1.  docker container run --network graduation_network -d -t -p 8080:8080 migueldoctor/cosmos-gitlabci-jdk8-maven-gradle bash
+    2.  docker exec -it  [CONTAINER_ID] bash
+    3.  nc -z -v [host] [port]
+    4.  mysql --host=some-mysql --user=root --password=my-secret-pw
+3. create the task_logs_system database 
+    1.  create database task_logs_system;
+    2.  use task_logs_system;
+4. create the table
+    1.  CREATE TABLE task (
+    id                      INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    execution_id            varchar(80),
+    task_name               varchar(80),
+    priority                INT,
+    time_of_schedule        varchar(80),
+    time_of_execution       varchar(80),
+    time_of_ending          varchar(80),
+    end_ok                  INT,
+    machine_log             text,
+    num_retries             INT,
+    machine_description     text,
+    is_test                 INT
+);
+5. add some records for initial testing
+    1. INSERT INTO task (execution_id, task_name, priority, time_of_schedule, time_of_execution, time_of_ending, end_ok, machine_log, num_retries, machine_description,is_test)
+VALUES ('43df54gbd354b', 'task name', 1, '1:02:45', '2:02:45', '3:02:45', 0, 'Esto es un log', 4, 'numserver:4,server1:melo,server2:melisimo',1);
 
 
 
