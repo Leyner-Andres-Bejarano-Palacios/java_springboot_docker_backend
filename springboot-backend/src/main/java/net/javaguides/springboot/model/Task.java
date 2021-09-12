@@ -9,7 +9,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "task")
-public class Task {
+public class Task  implements Comparable<Task> {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,7 +22,7 @@ public class Task {
 	private String taskName;
 
 	@Column(name = "priority")
-	private long priority;
+	private int priority;
 
 	@Column(name = "time_of_schedule")
 	private String timeOfSchedule;
@@ -54,7 +54,7 @@ public class Task {
 	
 	public Task(String executionId,
                 String taskName,
-                long priority,
+                int priority,
                 String timeOfSchedule,
                 String timeOfExecution,
                 String timeOfEnding,
@@ -77,6 +77,8 @@ public class Task {
         this.isTest = isTest;
 	}
 
+
+
 	public long getId() {
 		return id;
 	}
@@ -89,10 +91,16 @@ public class Task {
 	public void setTaskName(String taskName) {
 		this.taskName = taskName;
 	}
-	public long getPriority() {
+	public String getExecutionId() {
+		return executionId;
+	}
+	public void setExecutionId(String executionId) {
+		this.executionId = executionId;
+	}
+	public int getPriority() {
 		return priority;
 	}
-	public void setPriority(long priority) {
+	public void setPriority(int priority) {
 		this.priority = priority;
 	}
 	public String getTimeOfSchedule() {
@@ -143,5 +151,30 @@ public class Task {
 	public void setIsTest(long isTest) {
 		this.isTest = isTest;
 	}
+
+	@Override
+  	public boolean equals(Object o) {
+		if (!(o instanceof Task)) {
+			return false;
+		}
+		Task task = (Task) o;
+		if (this.executionId == task.getExecutionId()) {
+			return true;
+		}
+		return false;
+  	}
+
+
+	@Override
+    public int compareTo(Task task) {
+		int taskPriority = task.getPriority();
+		if (this.getPriority() < taskPriority) {
+    	  return -1;
+    	}
+		if (this.getPriority() > taskPriority) {
+      		return 1;
+    	}
+        return 0;
+    }
 
 }

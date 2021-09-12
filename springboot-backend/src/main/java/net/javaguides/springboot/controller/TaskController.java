@@ -100,7 +100,7 @@ public class TaskController {
 	}
 
 	@GetMapping("/tasks-priorizer")
-	public Long getFirstTask(){
+	public Task getFirstTask(){
 		return taskPriorizer.fn_get_first_task();
 	}
 }

@@ -10,16 +10,16 @@ import org.springframework.stereotype.Component;
 @NoArgsConstructor
 public class TaskPriorizer {
 
-    PriorityQueue<Long> minHeap = new PriorityQueue<>();
-    HashMap<Long, Task> hmap = new HashMap<Long, Task>();
+    PriorityQueue<Task> minHeap = new PriorityQueue<>();
+    HashMap<Integer, Task> hmap = new HashMap<Integer, Task>();
 
     public String fn_priorize_task(Task task) {
-        minHeap.add(task.getPriority());
+        minHeap.add(task);
         hmap.put(task.getPriority(), task);
         return "Succefully priorized task";
     }
 
-    public Long fn_get_first_task() {
+    public Task fn_get_first_task() {
         return minHeap.poll();
         // minHeap.poll()
         // minHeap.add(taskId);
