@@ -33,4 +33,9 @@ public class TaskController {
 	public List<Task> getAllTasks(){
 		return taskRepository.findAll();
 	}
+
+	@PostMapping("/tasks")
+	public Task createEmployee(@RequestBody Task task) {
+		return taskRepository.save(task);
+	}
 }

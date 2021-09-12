@@ -97,5 +97,11 @@ VALUES (1, 'someemail@gmail.com', 'other name','some name');
     1. INSERT INTO task (execution_id, task_name, priority, time_of_schedule, time_of_execution, time_of_ending, end_ok, machine_log, num_retries, machine_description,is_test)
 VALUES ('43df54gbd354b', 'task name', 1, '1:02:45', '2:02:45', '3:02:45', 0, 'Esto es un log', 4, 'numserver:4,server1:melo,server2:melisimo',1);
 
+6. functional test for the post method
+    1.  ![functional test for post](img/functionalTestForPost.png)
+
+7. In the video guide there is no Bussiness logic layer, some let's look for some example where I can see an example of this....... this one [looks](https://github.com/gothinkster/spring-boot-realworld-example-app/blob/master/src/main/java/io/spring/api/ArticleApi.java) promising
+    1. 
+
 
 
