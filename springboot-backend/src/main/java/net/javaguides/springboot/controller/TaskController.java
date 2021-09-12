@@ -19,14 +19,27 @@ import org.springframework.web.bind.annotation.RestController;
 import net.javaguides.springboot.exception.ResourceNotFoundException;
 import net.javaguides.springboot.model.Task;
 import net.javaguides.springboot.repository.TaskRepository;
+import net.javaguides.springboot.application.TaskPriorizer;
+
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api/v1/")
 public class TaskController {
-
-	@Autowired
 	private TaskRepository taskRepository;
+	private TaskPriorizer taskPriorizer;
+
+
+	public TaskController(
+		TaskRepository taskRepository,
+		TaskPriorizer taskPriorizer
+	){
+		this.taskRepository = taskRepository;
+		this.taskPriorizer  = taskPriorizer;
+
+	}
+
+
 	
 	// get all tasks
 	@GetMapping("/tasks")
@@ -35,12 +48,12 @@ public class TaskController {
 	}
 
 	@PostMapping("/tasks")
-	public Task createEmployee(@RequestBody Task task) {
+	public Task createTask(@RequestBody Task task) {
 		return taskRepository.save(task);
 	}
 
 	@GetMapping("/tasks/{id}")
-	public ResponseEntity<Task> getEmployeeById(@PathVariable Long id) {
+	public ResponseEntity<Task> getTaskById(@PathVariable Long id) {
 		Task task = taskRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Task not exist with id :" + id));
 		return ResponseEntity.ok(task);
@@ -79,5 +92,15 @@ public class TaskController {
 		Map<String, Boolean> response = new HashMap<>();
 		response.put("deleted", Boolean.TRUE);
 		return ResponseEntity.ok(response);
+	}
+
+	@PostMapping("/tasks-priorizer")
+	public String priorizeTask(@RequestBody Task task) {
+		return taskPriorizer.fn_priorize_task(task);
+	}
+
+	@GetMapping("/tasks-priorizer")
+	public Long getFirstTask(){
+		return taskPriorizer.fn_get_first_task();
 	}
 }
