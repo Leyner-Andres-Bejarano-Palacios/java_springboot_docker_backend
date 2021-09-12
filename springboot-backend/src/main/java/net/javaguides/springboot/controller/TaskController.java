@@ -45,4 +45,27 @@ public class TaskController {
 				.orElseThrow(() -> new ResourceNotFoundException("Task not exist with id :" + id));
 		return ResponseEntity.ok(task);
 	}
+
+
+		// update employee rest api
+	
+	@PutMapping("/tasks/{id}")
+	public ResponseEntity<Task> updateTask(@PathVariable Long id, @RequestBody Task taskDetails){
+		Task task = taskRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Task not exist with id :" + id));
+		
+		task.setTaskName(taskDetails.getTaskName());
+		task.setPriority(taskDetails.getPriority());
+		task.setTimeOfSchedule(taskDetails.getTimeOfSchedule());
+		task.setTimeOfExecution(taskDetails.getTimeOfExecution());
+		task.setTimeOfEnding(taskDetails.setTimeOfEnding());
+		task.setEndOk(taskDetails.getEndOk());
+		task.setMachineLog(taskDetails.getMachineLog());
+		task.setNumRetries(taskDetails.getNumRetries());
+		task.setMachineDescription(taskDetails.getMachineDescription());
+		task.setIsTest(taskDetails.getIsTest());
+		
+		Task updatedTask = taskRepository.save(task);
+		return ResponseEntity.ok(updatedTask);
+	}
 }
