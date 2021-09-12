@@ -38,4 +38,11 @@ public class TaskController {
 	public Task createEmployee(@RequestBody Task task) {
 		return taskRepository.save(task);
 	}
+
+	@GetMapping("/tasks/{id}")
+	public ResponseEntity<Task> getEmployeeById(@PathVariable Long id) {
+		Task task = taskRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Task not exist with id :" + id));
+		return ResponseEntity.ok(task);
+	}
 }

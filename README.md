@@ -48,7 +48,7 @@ Project created as a backend adding docker to the java guide project to make it 
         5. INSERT INTO employees (id, first_name,last_name, email_id)
 VALUES (1, 'someemail@gmail.com', 'other name','some name');
 
-    7. Copy the spingboot  code into the container
+    7. Copy the spingboot  code into the container (if you did not mount a volume)
 
         1.   docker cp spring-boot/.     [Container_ID]:/app/spring-boot/
 
@@ -71,7 +71,7 @@ VALUES (1, 'someemail@gmail.com', 'other name','some name');
     1. Even though for the priorizerBL the important part is the data stored in memory/RAM (the data structures) but for analitycs is important to persist some information, so let's add the database task_logs_system where we will have metadata about the task (like how long did it took from the moment it was scheduled to the moment when it was executed, how many machines were there, how many times did the task had to retry).
 
 2. get into the backend container, and connect to the database
-    1.  docker container run --network graduation_network -d -t -p 8080:8080 migueldoctor/cosmos-gitlabci-jdk8-maven-gradle bash
+    1.  docker container run --rm -v "$PWD":/app/ --network graduation_network -d -t -p 8080:8080 migueldoctor/cosmos-gitlabci-jdk8-maven-gradle bash
     2.  docker exec -it  [CONTAINER_ID] bash
     3.  nc -z -v [host] [port]
     4.  mysql --host=some-mysql --user=root --password=my-secret-pw
