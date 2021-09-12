@@ -21,7 +21,7 @@ Project created as a backend adding docker to the java guide project to make it 
 
     1. docker run --network graduation_network --name some-mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=my-secret-pw -d mysql
 6. run the java remote server image
-    1. docker container run --network graduation_network --name graduation-backend -d -t -p 8080:8080 migueldoctor/cosmos-gitlabci-jdk8-maven-gradle bash
+    1. --rm -v "$PWD":/app
     2. To know the container id execute the command "docker ps", the container id will be the one highlighted in the image, you know you are getting the right container id because of the container name in the same row
      ![highlighted container id](img/highlighted_container_id.png)
     3. docker exec -it  [CONTAINER_ID] bash

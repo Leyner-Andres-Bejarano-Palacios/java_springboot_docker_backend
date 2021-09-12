@@ -58,7 +58,7 @@ public class TaskController {
 		task.setPriority(taskDetails.getPriority());
 		task.setTimeOfSchedule(taskDetails.getTimeOfSchedule());
 		task.setTimeOfExecution(taskDetails.getTimeOfExecution());
-		task.setTimeOfEnding(taskDetails.setTimeOfEnding());
+		task.setTimeOfEnding(taskDetails.getTimeOfEnding());
 		task.setEndOk(taskDetails.getEndOk());
 		task.setMachineLog(taskDetails.getMachineLog());
 		task.setNumRetries(taskDetails.getNumRetries());
@@ -67,5 +67,17 @@ public class TaskController {
 		
 		Task updatedTask = taskRepository.save(task);
 		return ResponseEntity.ok(updatedTask);
+	}
+
+
+	@DeleteMapping("/tasks/{id}")
+	public ResponseEntity<Map<String, Boolean>> deleteTask(@PathVariable Long id){
+		Task task = taskRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Task not exist with id :" + id));
+		
+		taskRepository.delete(task);
+		Map<String, Boolean> response = new HashMap<>();
+		response.put("deleted", Boolean.TRUE);
+		return ResponseEntity.ok(response);
 	}
 }
