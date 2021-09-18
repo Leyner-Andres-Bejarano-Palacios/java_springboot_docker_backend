@@ -100,7 +100,13 @@ VALUES ('43df54gbd354b', 'task name', 1, '1:02:45', '2:02:45', '3:02:45', 0, 'Es
 6. functional test for the post method
     1.  ![functional test for post](img/functionalTestForPost.png)
 
-7. In the video guide there is no Bussiness logic layer, some let's look for some example where I can see an example of this....... this one [looks](https://github.com/gothinkster/spring-boot-realworld-example-app/blob/master/src/main/java/io/spring/api/ArticleApi.java) promising
+
+7. doing the unittest
+    1.  [guide 1](https://www.youtube.com/watch?v=--nQfs67zCM)
+    2.  to know the last version of junit 5 this [link](https://maven.apache.org/surefire/maven-surefire-plugin/examples/junit-platform.html)
+    3.  
+
+#. In the video guide there is no Bussiness logic layer, some let's look for some example where I can see an example of this....... this one [looks](https://github.com/gothinkster/spring-boot-realworld-example-app/blob/master/src/main/java/io/spring/api/ArticleApi.java) promising
     1. 
 
 
