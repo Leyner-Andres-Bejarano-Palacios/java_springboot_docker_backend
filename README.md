@@ -101,7 +101,9 @@ VALUES ('43df54gbd354b', 'task name', 1, '1:02:45', '2:02:45', '3:02:45', 0, 'Es
     1.  ![functional test for post](img/functionalTestForPost.png)
 
 
-7. doing the unittest
+## testing the system
+
+1. doing the unittest
     1.  [guide 1](https://www.youtube.com/watch?v=--nQfs67zCM)
     2.  to know the last version of junit 5 this [link](https://maven.apache.org/surefire/maven-surefire-plugin/examples/junit-platform.html)
     3.  min 1:18, the concept of exclusion
@@ -112,14 +114,43 @@ VALUES ('43df54gbd354b', 'task name', 1, '1:02:45', '2:02:45', '3:02:45', 0, 'Es
         2.  
         3.  
 
-8. trying to do it again, I will correct this documentation later
+2. trying to do it again, I will correct this documentation later
     1.  [guide 1](https://www.youtube.com/watch?v=joFv_rltmXE)
     2.  So, The unitTest for the TaskPriorizer class need to answer three questions, does the TaskPriorizer return one when it is empty, does it return the task in the correct order and does it return 1 whn is empty again
     3.  Let's identify the class as a TestClass with the annotation, and add a displayname [reference](https://mkyong.com/junit5/junit-5-display-names/)
     4.  Let's use the before annotation 
 
-9. executing the test
+3. executing the test
     1.  ./mvnw test    
+
+
+## analizing the quality of the system
+
+1. [guide](https://hub.docker.com/_/sonarqube)
+2. [guide_derived_from_first_guide](https://docs.sonarqube.org/latest/setup/install-server/)
+    1.  "make sure that your Docker host configuration complies with the Elasticsearch production mode requirements and File Descriptors configuration."
+    2.  
+3. create docker postgres container
+    1.  docker run --name some-postgres-sonarqube \
+    -e POSTGRES_USER=postgres \
+    -e POSTGRES_PASSWORD=mysecretpassword \
+    -e POSTGRES_DB=sonarqube \
+    --network graduation_network \
+    -d postgres
+4. create docker sonarqueue container
+    1.  docker run --name sonarqube \
+    -p 9000:9000 \
+    -v "$(pwd)/sonarqube_data":/opt/sonarqube/data \
+    -v "$(pwd)/sonarqube_extensions":/opt/sonarqube/extensions \
+    -v "$(pwd)/sonarqube_logs":/opt/sonarqube/logs \
+    --network graduation_network \
+    -d sonarqube
+
+5. amaizing trick for debuggin docker container that are not [starting](https://serverfault.com/questions/596994/how-can-i-debug-a-docker-container-initialization)
+
+1. create the postgresql container
+2. execute the sonarQueue
+
 
 #. In the video guide there is no Bussiness logic layer, some let's look for some example where I can see an example of this....... this one [looks](https://github.com/gothinkster/spring-boot-realworld-example-app/blob/master/src/main/java/io/spring/api/ArticleApi.java) promising
     1. 
