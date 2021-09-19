@@ -27,5 +27,14 @@ public class TaskPriorizer {
         // return "Succefully priorized task";
     }
 
+    public HashMap<Integer, Task> fn_get_all_task() {
+        return hmap;
+        // minHeap.poll()
+        // minHeap.add(taskId);
+        // hmap.put(taskId, task);
+        // return "Succefully priorized task";
+    }
+
+
     // public get_list_tak
 }

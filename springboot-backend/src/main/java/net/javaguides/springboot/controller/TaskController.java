@@ -103,4 +103,9 @@ public class TaskController {
 	public Task getFirstTask(){
 		return taskPriorizer.fn_get_first_task();
 	}
+
+	@GetMapping("/tasks-priorize-all")
+	public HashMap<Integer, Task> getAllTask(){
+		return taskPriorizer.fn_get_all_task();
+	}
 }
