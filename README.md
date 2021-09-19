@@ -148,12 +148,18 @@ VALUES ('43df54gbd354b', 'task name', 1, '1:02:45', '2:02:45', '3:02:45', 0, 'Es
 
 5. amaizing trick for debuggin docker container that are not [starting](https://serverfault.com/questions/596994/how-can-i-debug-a-docker-container-initialization)
 
-1. create the postgresql container
-2. execute the sonarQueue
+6. Analizing the project from sonarQueue
+    1.  [guide](https://www.baeldung.com/sonar-qube)
+    2.  ./mvnw sonar:sonar -Dsonar.host.url=http://sonarqube:9000   -Dsonar.login=63e9302d7c4dbcafb6bdf1c8215d59a6d7ba7110
+
+7. I will need to create a custom image.
+    1.  [guide](https://migueldoctor.medium.com/how-to-create-a-custom-docker-image-with-jdk8-maven-and-gradle-ddc90f41cee4)
+    2.  docker image build -t graduation_backend_image .
+    3.  docker container run --rm -v "$PWD":/app/ --network graduation_network -d -t -p 8080:8080 graduation_backend_image bash
 
 
-#. In the video guide there is no Bussiness logic layer, some let's look for some example where I can see an example of this....... this one [looks](https://github.com/gothinkster/spring-boot-realworld-example-app/blob/master/src/main/java/io/spring/api/ArticleApi.java) promising
-    1. 
+
+
 
 
 
