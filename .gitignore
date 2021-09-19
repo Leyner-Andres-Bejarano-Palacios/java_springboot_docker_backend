@@ -64,3 +64,8 @@ target
 secrets.yml
 .gradletasknamecache
 .sts4-cache
+
+#sonarQueue data
+sonarqube_data/
+sonarqube_extensions/
+sonarqube_logs/
