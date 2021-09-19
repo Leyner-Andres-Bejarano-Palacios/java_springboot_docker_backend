@@ -150,12 +150,15 @@ VALUES ('43df54gbd354b', 'task name', 1, '1:02:45', '2:02:45', '3:02:45', 0, 'Es
 
 6. Analizing the project from sonarQueue
     1.  [guide](https://www.baeldung.com/sonar-qube)
-    2.  ./mvnw sonar:sonar -Dsonar.host.url=http://sonarqube:9000   -Dsonar.login=63e9302d7c4dbcafb6bdf1c8215d59a6d7ba7110
+    2.  ./mvnw sonar:sonar -Dsonar.host.url=http://sonarqube:9000   -Dsonar.login=6792eb48e8f89f43168abb332df99a140994e574
 
 7. I will need to create a custom image.
     1.  [guide](https://migueldoctor.medium.com/how-to-create-a-custom-docker-image-with-jdk8-maven-and-gradle-ddc90f41cee4)
     2.  docker image build -t graduation_backend_image .
     3.  docker container run --rm -v "$PWD":/app/ --network graduation_network -d -t -p 8080:8080 graduation_backend_image bash
+
+8. Trying to get the real code coverage
+    1.  [guide](https://www.baeldung.com/sonarqube-jacoco-code-coverage)
 
 
 
