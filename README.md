@@ -21,7 +21,7 @@ Project created as a backend adding docker to the java guide project to make it 
 
     1. docker run --network graduation_network --name some-mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=my-secret-pw -d mysql
 6. run the java remote server image
-    1. --rm -v "$PWD":/app
+    1. docker container run --rm -v "$PWD/27_java_springboot_docker_backend/":/app/  --rm -v "$PWD/28_second_try_learning_angular/":/opt/   --network graduation_network -d -t -p 8080:8080 graduation_backend_image bash
     2. To know the container id execute the command "docker ps", the container id will be the one highlighted in the image, you know you are getting the right container id because of the container name in the same row
      ![highlighted container id](img/highlighted_container_id.png)
     3. docker exec -it  [CONTAINER_ID] bash
@@ -91,8 +91,16 @@ VALUES (1, 'someemail@gmail.com', 'other name','some name');
     machine_log             text,
     num_retries             INT,
     machine_description     text,
-    is_test                 INT
-);
+    requested_url     text,
+    is_test  INT);
+    2.  --------------------------------if you already created this table execute the following comands
+        1.  mysql --user=root --password=my-secret-pw
+        2.  use task_logs_system;
+        3.  ALTER TABLE task ADD requested_url text NULL AFTER machine_description;
+  
+    
+    
+    
 5. add some records for initial testing
     1. INSERT INTO task (execution_id, task_name, priority, time_of_schedule, time_of_execution, time_of_ending, end_ok, machine_log, num_retries, machine_description,is_test)
 VALUES ('43df54gbd354b', 'task name', 1, '1:02:45', '2:02:45', '3:02:45', 0, 'Esto es un log', 4, 'numserver:4,server1:melo,server2:melisimo',1);
@@ -155,14 +163,18 @@ VALUES ('43df54gbd354b', 'task name', 1, '1:02:45', '2:02:45', '3:02:45', 0, 'Es
 7. I will need to create a custom image.
     1.  [guide](https://migueldoctor.medium.com/how-to-create-a-custom-docker-image-with-jdk8-maven-and-gradle-ddc90f41cee4)
     2.  docker image build -t graduation_backend_image .
-    3.  docker container run --rm -v "$PWD":/app/ --network graduation_network -d -t -p 8080:8080 graduation_backend_image bash
+    3.  docker container run --rm -v "$PWD/27_java_springboot_docker_backend/":/app/  --rm -v "$PWD/28_second_try_learning_angular/":/opt/   --network graduation_network -d -t -p 8080:8080 graduation_backend_image bash
 
 8. Trying to get the real code coverage
     1.  [guide](https://www.baeldung.com/sonarqube-jacoco-code-coverage)
 
+9. UnitTestin application layer
+    1.  [guide](http://cda.mrs.umn.edu/~elenam/2101Spring2016/examples/unit_tests_pq.html)
 
 
 
+# TO-DO
 
+1. add display for unit-test
 
 

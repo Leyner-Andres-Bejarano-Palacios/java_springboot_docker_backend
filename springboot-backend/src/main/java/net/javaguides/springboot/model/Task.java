@@ -45,6 +45,9 @@ public class Task  implements Comparable<Task> {
 	@Column(name = "machine_description")
 	private String machineDescription;
 
+	@Column(name = "requested_url")
+	private String requestedUrl;
+
 	@Column(name = "is_test")
 	private long isTest;
 
@@ -62,6 +65,7 @@ public class Task  implements Comparable<Task> {
                 String machineLog,
                 long numRetries,
                 String machineDescription,
+				String requestedUrl,
                 long isTest) {
 		super();
 		this.executionId = executionId;
@@ -74,6 +78,7 @@ public class Task  implements Comparable<Task> {
         this.machineLog = machineLog;
         this.numRetries = numRetries;
         this.machineDescription = machineDescription;
+		this.requestedUrl = requestedUrl;
         this.isTest = isTest;
 	}
 
@@ -141,6 +146,13 @@ public class Task  implements Comparable<Task> {
 	}
 	public String getMachineDescription() {
 		return machineDescription;
+	}
+	public void setRequestedUrl(String requestedUrl) {
+		this.requestedUrl = requestedUrl;
+	}
+
+	public String getRequestedUrl() {
+		return requestedUrl;
 	}
 	public void setMachineDescription(String machineDescription) {
 		this.machineDescription = machineDescription;

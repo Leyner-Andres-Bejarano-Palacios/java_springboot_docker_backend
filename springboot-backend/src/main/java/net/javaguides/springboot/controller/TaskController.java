@@ -1,8 +1,10 @@
 package net.javaguides.springboot.controller;
 
+import java.util.Random;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +17,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.util.EntityUtils;
 
 import net.javaguides.springboot.exception.ResourceNotFoundException;
 import net.javaguides.springboot.model.Task;
@@ -49,6 +57,9 @@ public class TaskController {
 
 	@PostMapping("/tasks")
 	public Task createTask(@RequestBody Task task) {
+		task.setEndOk(3);
+		task.setPriority(establishPrority(task));
+		String response = taskPriorizer.fn_priorize_task(task);
 		return taskRepository.save(task);
 	}
 
@@ -76,6 +87,7 @@ public class TaskController {
 		task.setMachineLog(taskDetails.getMachineLog());
 		task.setNumRetries(taskDetails.getNumRetries());
 		task.setMachineDescription(taskDetails.getMachineDescription());
+		task.setRequestedUrl(taskDetails.getRequestedUrl());
 		task.setIsTest(taskDetails.getIsTest());
 		
 		Task updatedTask = taskRepository.save(task);
@@ -107,5 +119,29 @@ public class TaskController {
 	@GetMapping("/tasks-priorize-all")
 	public HashMap<Integer, Task> getAllTask(){
 		return taskPriorizer.fn_get_all_task();
+	}
+
+	public int establishPrority(Task task) {
+		int result;
+		HttpPost post = new HttpPost("http://graduation_neural_network_image:5000");
+        StringBuilder json = new StringBuilder();
+        json.append("{\"petal_length\":");
+		json.append(String.valueOf(task.getIsTest()));
+        json.append("}");
+		try{
+			post.setEntity(new StringEntity(json.toString()));
+		}
+		catch(Exception e){
+			System.out.print(e);
+		}
+		
+		try (CloseableHttpClient httpClient = HttpClients.createDefault();
+             CloseableHttpResponse response = httpClient.execute(post)) {
+            result = Integer.parseInt(EntityUtils.toString(response.getEntity()));
+        }
+		catch(Exception e) {
+			result = new Random().nextInt(1000);
+		}
+		return result;
 	}
 }
