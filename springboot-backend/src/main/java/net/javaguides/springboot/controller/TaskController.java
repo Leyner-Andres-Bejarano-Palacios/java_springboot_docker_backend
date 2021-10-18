@@ -58,7 +58,6 @@ public class TaskController {
 	@PostMapping("/tasks")
 	public Task createTask(@RequestBody Task task) {
 		task.setEndOk(3);
-		task.setPriority(establishPrority(task));
 		String response = taskPriorizer.fn_priorize_task(task);
 		return taskRepository.save(task);
 	}
