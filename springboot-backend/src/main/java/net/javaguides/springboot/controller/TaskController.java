@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.*;
+import java.util.Calendar;
+import java.text.SimpleDateFormat;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -36,6 +38,7 @@ import net.javaguides.springboot.application.TaskPriorizer;
 public class TaskController {
 	private TaskRepository taskRepository;
 	private TaskPriorizer taskPriorizer;
+	public static final String DATE_FORMAT_NOW = "yyyy-MM-dd HH:mm:ss";
 
 
 	public TaskController(
@@ -58,8 +61,10 @@ public class TaskController {
 	@PostMapping("/tasks")
 	public Task createTask(@RequestBody Task task) {
 		task.setEndOk(3);
-		String response = taskPriorizer.fn_priorize_task(task);
-		return taskRepository.save(task);
+		task.setTimeOfSchedule(now());
+		Task savedTask = taskRepository.save(task);
+		String response = taskPriorizer.fn_priorize_task(savedTask);
+		return savedTask;
 	}
 
 	@GetMapping("/tasks/{id}")
@@ -90,6 +95,30 @@ public class TaskController {
 		task.setIsTest(taskDetails.getIsTest());
 		
 		Task updatedTask = taskRepository.save(task);
+		taskPriorizer.fn_add_task_TimeOfEnding(updatedTask);
+		return ResponseEntity.ok(updatedTask);
+	}
+
+
+	@PostMapping("/taskss")
+	public ResponseEntity<Task> updateTaskv2(@RequestBody Task taskDetails){
+		Task task = taskRepository.findById(taskDetails.getId())
+				.orElseThrow(() -> new ResourceNotFoundException("Task not exist with id :" + taskDetails.getId()));
+		
+		task.setTaskName(taskDetails.getTaskName());
+		task.setPriority(taskDetails.getPriority());
+		task.setTimeOfSchedule(taskDetails.getTimeOfSchedule());
+		task.setTimeOfExecution(taskDetails.getTimeOfExecution());
+		task.setTimeOfEnding(taskDetails.getTimeOfEnding());
+		task.setEndOk(taskDetails.getEndOk());
+		task.setMachineLog(taskDetails.getMachineLog());
+		task.setNumRetries(taskDetails.getNumRetries());
+		task.setMachineDescription(taskDetails.getMachineDescription());
+		task.setRequestedUrl(taskDetails.getRequestedUrl());
+		task.setIsTest(taskDetails.getIsTest());
+		
+		Task updatedTask = taskRepository.save(task);
+		taskPriorizer.fn_add_task_TimeOfEnding(updatedTask);
 		return ResponseEntity.ok(updatedTask);
 	}
 
@@ -142,5 +171,11 @@ public class TaskController {
 			result = new Random().nextInt(1000);
 		}
 		return result;
+	}
+
+	public static String now() {
+		Calendar cal = Calendar.getInstance();
+		SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT_NOW);
+		return sdf.format(cal.getTime());
 	}
 }

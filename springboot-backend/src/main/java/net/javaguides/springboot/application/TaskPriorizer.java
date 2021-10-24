@@ -35,6 +35,10 @@ public class TaskPriorizer {
         // return "Succefully priorized task";
     }
 
+    public void fn_add_task_TimeOfEnding(Task task) {
+        hmap.put(task.getPriority(), task);
+    }
+
 
     // public get_list_tak
 }
